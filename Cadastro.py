@@ -36,8 +36,11 @@ while login == True:
                     print("A senha do usuário está correta")
                 else:
                     print("A senha do usuário está incorreta")
+            
+            else:
+                print("O usuário não existe!")
+                break
                     
     elif n == 3:
         login = False
     
-    break
