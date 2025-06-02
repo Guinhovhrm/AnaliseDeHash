@@ -1,3 +1,6 @@
+#Victor Hugo Rodrigues Macharete
+#Caio Letty de Carvalho
+
 import hashlib
 import itertools
 import string

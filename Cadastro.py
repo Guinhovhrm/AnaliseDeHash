@@ -4,6 +4,7 @@
 import hashlib
 
 login = True
+
 while login == True:
     n = int(input("O que você deseja fazer?\n1 - Cadastrar \n2 - Autenticar \n3 - Sair\n> "))
 
@@ -29,30 +30,31 @@ while login == True:
         with open("Credenciais.txt", "r") as arquivo:
             conteudo = arquivo.readlines()
         
-        user_verif = input(f"Digite o nome do usuário > ")
+        user_verif = input(f"Digite o nome do usuário > ").strip()
         encontrou = False
 
         for linha in conteudo:
-            usuario = linha.split(",")
-            nome_usuario = usuario[0]
-            senha_usuario = usuario[1].replace("\n", "")
+            usuario = linha.strip().split(",")
+            nome_usuario = usuario[0].strip()
+            senha_usuario = usuario[1].strip()
             
             if user_verif == nome_usuario:
+                tentativas = 0
                 encontrou = True
-                senha_verif = input(f"Digite a senha de verificação do usuário {user_verif} > ")
-                hash_senha_verif = hashlib.md5(senha_verif.encode()).hexdigest()
-                
-                    
-                if (hash_senha_verif == senha_usuario):
-                    print("A senha do usuário está correta")
-                else:
-                    print("A senha do usuário está incorreta")
-                    break
-            
-            else:
-                print("")
-                
-                    
+                while tentativas < 3:
+                    senha_verif = input(f"Digite a senha de verificação do usuário {user_verif} > ")
+                    hash_senha_verif = hashlib.md5(senha_verif.encode()).hexdigest()
+                        
+                    if (hash_senha_verif == senha_usuario):
+                        print("A senha do usuário está correta")
+                        break
+                    else:
+                        tentativas += 1
+                        print(f"A senha do usuário está incorreta. Tentativas restantes: {3 - tentativas}")
+                        
+                        if tentativas == 3:
+                            print("números de tentativas excedido.")
+                            login = False
     elif n == 3:
         login = False
     
